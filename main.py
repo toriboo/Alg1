@@ -1,4 +1,5 @@
 import random
+import time
 def swap(A,i, j):
     k = A[i]
     A[i] = A[j]
@@ -114,20 +115,52 @@ def shell_sort(A):
                 j = j - gap
             A[j] = a
     return A
+def gaps_shell(A):
+    gaps = []
+    n = len(A)
+    n //= 2
+    while (n >= 1):
+        gaps.append(n)
+        n //= 2
+    return gaps
+def gaps_hib(A):
+    n = len(A)
+    gaps = []
+    k = 1
+    gaps.append(1)
+    while ( 2**k -1 < n):
+        gaps.append(2**k - 1)
+        k += 1
+    return gaps[n:0:-1]
+def gaps_pratt(A):
+    n = len(A)
+    ar1 = [2**i for i in range(0, n)]
+    ar2 = [3**j for j in range(0, n)]
+    gaps = sorted(c*d for c in ar1 for d in ar2 if c*d <= n)
+    return gaps[len(gaps):0:-1]+[1]
 
 
-gaps = [5,3,1]
-A = [3,2, 3, 4,7, 4]
-print(A)
+A = []
+random.seed(21)
+n = 1000
+A = [random.randint(0, n//2) for i in range(n)]
+#print(A)
+time1 = time.time()
 #insertion_sort(A)
+
 #selection_sort(A)
 #Bogosort(A)
 #bubble_sort(A)
 #A = merge_sort(A)
 #A = quick_sort(A)
 #heap_sort(A)
+#gaps = gaps_shell(A)
+#gaps = gaps_hib(A)
+#gaps = gaps_pratt(A)
 #shell_sort(A)
-print(A)
+time2 = time.time()
+print(time2-time1)
+#print(A)
 
 
 
