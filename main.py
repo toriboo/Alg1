@@ -47,10 +47,15 @@ def Bogosort(A):
     return A
 def bubble_sort(A):
     n = len(A)
+    sortB = False
     for i in range(0, n-1):
+        sortB = True
         for j in range(0,n-i-1):
             if (A[j] > A[j+1]):
                 swap(A, j ,j+1)
+                sortB = False
+        if (sorB):
+            return A
     return A
 def Merge(A, B):
     C = []
