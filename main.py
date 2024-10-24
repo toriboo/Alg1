@@ -1,5 +1,7 @@
 import random
 import time
+import sys
+sys.setrecursionlimit(10**8)
 def swap(A,i, j):
     k = A[i]
     A[i] = A[j]
@@ -54,7 +56,7 @@ def bubble_sort(A):
             if (A[j] > A[j+1]):
                 swap(A, j ,j+1)
                 sortB = False
-        if (sorB):
+        if (sortB):
             return A
     return A
 def Merge(A, B):
@@ -87,12 +89,13 @@ def merge_sort(A):
 def quick_sort(A):
     n = len(A)
     if (n <= 1): return A
-    if (n >=2):
+    if (n >= 2):
         pivot = A[n//2]
         left = [x for x in A if x < pivot]
         middle = [x for x in A if x == pivot]
         right = [x for x in A if x > pivot]
         return quick_sort(left) + middle + quick_sort(right)
+
 def heapify(A,n, i):
     largest = i
     left = 2*i +1
@@ -104,7 +107,6 @@ def heapify(A,n, i):
     if ( i != largest):
         swap(A, i, largest)
         heapify(A,n, largest)
-
 def heap_sort(A):
     n = len(A)
     for  i in range(n//2-1,-1,-1):
@@ -143,35 +145,42 @@ def gaps_hib(A):
     return gaps[n:0:-1]
 def gaps_pratt(A):
     n = len(A)
-    ar1 = [2**i for i in range(0, n)]
-    ar2 = [3**j for j in range(0, n)]
+    ar1 = [2**i for i in range(0, int(n**(1/2)))]
+    ar2 = [3**j for j in range(0, int(n**(1/2)))]
     gaps = sorted(c*d for c in ar1 for d in ar2 if c*d <= n)
     return gaps[len(gaps):0:-1]+[1]
 
 
 A = []
 random.seed(21)
-n = 1000
-A = [random.randint(0, n//2) for i in range(n)]
-#print(A)
-time1 = time.time()
-#insertion_sort(A)
 
-#selection_sort(A)
-#Bogosort(A)
-#bubble_sort(A)
-#A = merge_sort(A)
-#A = quick_sort(A)
-#heap_sort(A)
-#gaps = gaps_shell(A)
-#gaps = gaps_hib(A)
-#gaps = gaps_pratt(A)
-#shell_sort(A, gaps)
-time2 = time.time()
-print(A)
-print(time2-time1)
-#print(A)
-
+for n in range(10000, 48001, 4000):
+    #gaps = gaps_shell(A)
+    #gaps = gaps_hib(A)
+    gaps = gaps_pratt(A)
+    #for i in range(n-1,-1,-1):
+    for i in range(n):
+        #A.append(i)
+        A.append(random.randint(0, n//2)) # для случайного заполнения
+    #k = int(n*0.9)
+    #for i in range(k):
+        #A.append(i)
+    #for i in range(k,n):
+        #A.append(random.randint(0, n//2)) # для случайного заполнения
+    time_test = 0
+    for i in range(10):
+        time1 = time.time()
+        #selection_sort(A)
+        #insertion_sort(A)
+        #bubble_sort(A)
+        #A = merge_sort(A)
+        #A = quick_sort(A)
+        #heap_sort(A)
+        shell_sort(A,gaps)
+        time2 = time.time()
+        time_test += (time2 - time1)
+    print(time_test/10)
+    print('  ')
 
 
 
